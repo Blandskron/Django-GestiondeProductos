@@ -1,0 +1,15 @@
+# Git
+.git
+.gitignore
+
+# Entorno y secretos
+.env
+.venv
+venv/
+
+# Archivos generados por Django
+staticfiles/
+media/
+
+# Caché de Python
+__pycache__/

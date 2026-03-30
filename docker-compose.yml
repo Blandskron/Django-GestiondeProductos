@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  # Servicio de la Base de Datos PostgreSQL
+  db:
+    image: postgres:15-alpine  # Usamos una imagen ligera de Postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    ports:
+      - "5432:5432" # Opcional: Exponer el puerto para conectar con un cliente de BD
+
+  # Servicio de la API de Django
+  api:
+    image: blandskron/gestordeproductos:latest # Usa la imagen de Docker Hub
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db # Le dice a Docker que inicie la BD antes que la API
+    env_file:
+      - ./.env
+
+volumes:
+  postgres_data: # Este volumen persistirá los datos de la BD
